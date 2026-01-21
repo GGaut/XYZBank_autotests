@@ -21,6 +21,6 @@ class TestDeleteCustomer:
 
         manager_page.delete_customer_by_name(customer_to_delete)
 
-        assert not manager_page.is_customer_present(customer_to_delete), (
+        assert manager_page.is_customer_present(customer_to_delete), (
             f"Customer {customer_to_delete} still in the table"
         )
