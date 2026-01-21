@@ -7,7 +7,7 @@ class Settings:
     WINDOW_WIDTH: int = 1920
     WINDOW_HEIGHT: int = 1080
 
-    WAIT_TIMER: int = 10
+    WAIT_TIMER: int = 20
 
     ALLURE_RESULTS_DIR: str = "./allure-results"
 

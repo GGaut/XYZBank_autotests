@@ -91,19 +91,3 @@ def create_test_customers(driver):
     with allure.step("Удаление тестовых клиентов"):
         for customer in created_customers:
             page.delete_customer_by_name(customer["first_name"])
-
-
-@pytest.hookimpl(hookwrapper=True)
-def pytest_runtest_makereport(item, call):
-    """A hook for tracking test crashes and creating screenshots for Allure"""
-    outcome = yield
-    rep = outcome.get_result()
-
-    if rep.failed and rep.when == "call":
-        driver = getattr(item._request.node, "_driver", None)
-        if driver:
-            allure.attach(
-                driver.get_screenshot_as_png(),
-                name="failure_screenshot",
-                attachment_type=allure.attachment_type.PNG,
-            )
