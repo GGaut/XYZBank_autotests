@@ -45,6 +45,7 @@ def driver(request):
 
         service = Service(ChromeDriverManager().install())
         driver = webdriver.Chrome(service=service, options=chrome_options)
+
     request.node.driver = driver
     yield driver
     driver.quit()
