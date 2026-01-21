@@ -1,3 +1,5 @@
+import os
+
 import allure
 import pytest
 from selenium import webdriver
@@ -16,6 +18,8 @@ from utils.data_generator import (
 @pytest.fixture()
 def driver(request):
     """A fixture for initializing the WebDriver"""
+    selenoid_url = os.environ.get("SELENOID_URL")
+
     chrome_options = webdriver.ChromeOptions()
     chrome_options.add_argument("--no-sandbox")
     chrome_options.add_argument("--disable-dev-shm-usage")
@@ -24,11 +28,23 @@ def driver(request):
         f"--window-size={settings.WINDOW_WIDTH},{settings.WINDOW_HEIGHT}"
     )
 
-    if settings.HEADLESS:
-        chrome_options.add_argument("--headless")
+    if selenoid_url:
+        capabilities = {
+            "browserName": "chrome",
+            "browserVersion": "120.0",
+            "selenoid:options": {"enableVNC": True, "enableVideo": False},
+        }
+        chrome_options.set_capability(
+            "selenoid:options", capabilities["selenoid:options"]
+        )
+        driver = webdriver.Remote(command_executor=selenoid_url, options=chrome_options)
 
-    service = Service(ChromeDriverManager().install())
-    driver = webdriver.Chrome(service=service, options=chrome_options)
+    else:
+        if settings.HEADLESS:
+            chrome_options.add_argument("--headless")
+
+        service = Service(ChromeDriverManager().install())
+        driver = webdriver.Chrome(service=service, options=chrome_options)
     request.node.driver = driver
     yield driver
     driver.quit()
