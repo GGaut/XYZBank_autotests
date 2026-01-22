@@ -26,7 +26,6 @@ class TestAddCustomer:
             manager_page.go_to_add_customer()
             .enter_first_name(first_name)
             .enter_last_name(last_name)
-            
             .enter_post_code(post_code)
             .click_add_customer()
         )
@@ -40,3 +39,4 @@ class TestAddCustomer:
         assert manager_page.is_customer_present(first_name), (
             f"Customer {first_name} is not in the table"
         )
+        input("enter")
