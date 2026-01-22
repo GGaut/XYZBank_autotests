@@ -1,4 +1,5 @@
 import os
+import time
 
 import allure
 import pytest
@@ -48,6 +49,7 @@ def driver(request):
 
     request.node.driver = driver
     yield driver
+    time.sleep(60)
     driver.quit()
 
 

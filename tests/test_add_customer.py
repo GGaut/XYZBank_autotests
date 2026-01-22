@@ -39,4 +39,3 @@ class TestAddCustomer:
         assert manager_page.is_customer_present(first_name), (
             f"Customer {first_name} is not in the table"
         )
-        input("enter")
