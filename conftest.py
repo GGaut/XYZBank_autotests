@@ -88,6 +88,6 @@ def create_test_customers(driver):
 
     yield created_customers
 
-    with allure.step("Удаление тестовых клиентов"):
+    with allure.step("Удаление тест клиентов"):
         for customer in created_customers:
             page.delete_customer_by_name(customer["first_name"])
